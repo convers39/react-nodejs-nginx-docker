@@ -1,0 +1,56 @@
+version: '3.8'
+
+networks:
+  default:
+
+services:
+  client:
+    depends_on:
+      - api
+    build:
+      context: ./client
+    container_name: client
+    volumes:
+      - ./client:/app
+      - ./client/node_modules:/app/node_modules
+    ports:
+      - '3000:3000'
+    restart: always
+    env_file:
+      - .env
+      - ./client/.env.local
+    networks:
+      - default
+  api:
+    build:
+      context: ./api
+    container_name: api
+    volumes:
+      - ./api:/app
+      - ./api/node_modules:/app/node_modules
+    ports:
+      - '3001:3001'
+    restart: always
+    env_file:
+      - .env
+      - ./api/.env.local
+    networks:
+      - default
+  nginx:
+    image: nginx
+    container_name: nginx
+    depends_on:
+      - api
+      - client
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/log:/var/log/nginx
+      # - ./nginx/html:/var/www/html
+      # - ./nginx/certs:/tmp/certs # key.pem cert.pem
+    ports:
+      - '80:80'
+      # - '443:443'
+    restart: always
+    networks:
+      - default
+

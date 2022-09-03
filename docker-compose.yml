@@ -24,6 +24,7 @@ services:
   api:
     build:
       context: ./api
+      target: ${BACKEND_STAGE}
     container_name: api
     volumes:
       - ./api:/app

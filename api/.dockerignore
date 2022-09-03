@@ -1,0 +1,30 @@
+# packages
+**/node_modules/
+
+# git
+**/.git
+**/.gitignore
+
+# readme
+**/README.md
+**/LICENSE
+
+# logs
+**/npm-debug.log
+**/*.log
+
+# test
+**/coverage
+**/test
+
+# editor
+**/.vscode
+**/.editorconfig
+
+# build
+**/dist
+**/build
+
+# secrets
+**/.aws
+**/.env
